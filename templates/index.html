@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Task Management System</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>Task Management System</h1>
+
+<form action="/add" method="POST">
+<input type="text" name="task" placeholder="Enter Task">
+<button>Add</button>
+</form>
+
+<ul>
+{% for task in tasks %}
+<li>
+{{ task }}
+<a href="/delete/{{ loop.index0 }}">Delete</a>
+</li>
+{% endfor %}
+</ul>
+
+</body>
+</html>
