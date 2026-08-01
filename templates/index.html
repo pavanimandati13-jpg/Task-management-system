@@ -1,76 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Task Management System</title>
-    <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Management System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
+  <div class="container">
+    <h1>Task Management System</h1>
+    
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="Enter Task..." />
+      <button id="addBtn">Add</button>
+    </div>
 
-<h1>Task Management System</h1>
+    <ul id="taskList"></ul>
+  </div>
 
-<input type="text" id="taskInput" placeholder="Enter Task">
-<button onclick="addTask()">Add</button>
-
-<ul id="taskList"></ul>
-
-<script>
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-function saveTasks() {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-function displayTasks() {
-    let list = document.getElementById("taskList");
-    list.innerHTML = "";
-
-    tasks.forEach((task, index) => {
-        let li = document.createElement("li");
-
-        li.innerHTML = `
-            <input type="checkbox" ${task.done ? "checked" : ""}
-            onchange="toggleTask(${index})">
-
-            <span style="text-decoration:${task.done ? 'line-through':'none'}">
-                ${task.text}
-            </span>
-
-            <button onclick="deleteTask(${index})">Delete</button>
-        `;
-
-        list.appendChild(li);
-    });
-}
-
-function addTask() {
-    let input = document.getElementById("taskInput");
-
-    if (input.value.trim() !== "") {
-        tasks.push({
-            text: input.value,
-            done: false
-        });
-
-        input.value = "";
-        saveTasks();
-        displayTasks();
-    }
-}
-
-function toggleTask(index) {
-    tasks[index].done = !tasks[index].done;
-    saveTasks();
-    displayTasks();
-}
-
-function deleteTask(index) {
-    tasks.splice(index, 1);
-    saveTasks();
-    displayTasks();
-}
-
-displayTasks();
-</script>
-
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
